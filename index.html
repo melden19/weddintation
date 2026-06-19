@@ -95,6 +95,9 @@
   .swatch:hover{transform:scale(1.08)}
   .dress-name{margin-top:20px;font-family:'Marck Script',cursive;font-size:clamp(26px,5vw,34px);color:#6f7547;min-height:42px}
   .dresscode .no-black{margin-top:18px;font-size:clamp(16px,2.1vw,19px);color:#56524a}
+  .dresscode .pool-note{margin:22px auto 0;max-width:520px;color:#2c5f6f;background:linear-gradient(160deg,#eef8fb 0%,#dcf0f5 100%);border:1px solid #bfe3ee;border-radius:18px;padding:22px 28px;box-shadow:0 8px 20px rgba(86,160,181,0.16)}
+  .dresscode .pool-note-icon{font-size:30px;margin-bottom:8px}
+  .dresscode .pool-note p{font-size:clamp(16px,2.1vw,19px);line-height:1.6;color:#2c5f6f;max-width:none;margin:0}
 
   /* GIFTS */
   .gifts{padding:clamp(40px,7vh,72px) 0}
@@ -114,16 +117,45 @@
   .photos-link{display:inline-block;padding:14px 34px;border-radius:999px;background:var(--accent);color:#fff;text-decoration:none;font-size:16px;letter-spacing:0.07em;box-shadow:0 6px 16px var(--accent-shadow);transition:transform .2s}
   .photos-link:hover{transform:translateY(-2px)}
 
+  /* SEE YOU SOON */
+  .see-you{padding:clamp(48px,8vh,84px) 0 clamp(16px,3vh,28px)}
+  .see-you-frame{display:inline-block;padding:12px;background:linear-gradient(160deg,#fffefb 0%,#f6f1e6 100%);border-radius:4px;box-shadow:0 0 0 1px rgba(217,205,184,0.55),0 24px 50px rgba(74,71,58,0.20),0 2px 6px rgba(74,71,58,0.10);max-width:450px;margin:clamp(26px,5vh,38px) auto 0}
+  .see-you-frame img{display:block;width:100%;height:auto;border-radius:1px;filter:grayscale(10%) sepia(6%) contrast(1.04) brightness(1.02)}
+  .see-you-title{font-family:'Marck Script',cursive;color:#6f7547;font-size:clamp(42px,9vw,62px);line-height:1;margin-bottom:16px}
+  .see-you p{font-size:clamp(16px,2.1vw,20px);line-height:1.65;font-style:italic;max-width:480px;text-align:center;margin:0 auto;color:#56524a}
+
   /* FOOTER */
-  footer{text-align:center;padding:clamp(40px,7vh,70px) 0 clamp(50px,9vh,90px)}
+  footer{text-align:center;padding:clamp(16px,3vh,28px) 0 clamp(50px,9vh,90px)}
   .footer-divider{display:flex;align-items:center;justify-content:center;gap:14px;margin-bottom:18px}
   .footer-divider .line{width:50px;height:1px;background:#cfc9b8}
   .footer-divider .heart{color:var(--accent)}
   .footer-names{font-family:'Marck Script',cursive;color:#6f7547;font-size:clamp(30px,6vw,44px);line-height:1}
   .footer-date{color:#9a9684;font-size:16px;letter-spacing:0.14em;margin-top:8px}
+
+  #page-loader{position:fixed;inset:0;background:#ffffff;z-index:9999;transition:opacity .3s ease}
 </style>
 </head>
 <body>
+
+<div id="page-loader" aria-hidden="true"></div>
+<script>
+(function(){
+  var loader = document.getElementById('page-loader');
+  function hideLoader(){
+    if (!loader || loader.dataset.hidden) return;
+    loader.dataset.hidden = '1';
+    loader.style.opacity = '0';
+    setTimeout(function(){ loader.remove(); }, 320);
+  }
+  var fontsReady = (document.fonts && document.fonts.ready) ? document.fonts.ready : Promise.resolve();
+  var pageLoaded = new Promise(function(resolve){
+    if (document.readyState === 'complete') resolve();
+    else window.addEventListener('load', resolve, { once: true });
+  });
+  Promise.all([pageLoaded, fontsReady]).then(hideLoader);
+  setTimeout(hideLoader, 4000);
+})();
+</script>
 
 <div class="page" id="page">
 
@@ -210,6 +242,10 @@
       <div class="swatches" id="swatches"></div>
       <div class="dress-name" id="dressName"></div>
       <p class="no-black">Просимо утриматися від чорного кольору в образах 🤍</p>
+      <div class="pool-note">
+        <div class="pool-note-icon">🌊</div>
+        <p>На території є басейн й ми сподіваємося на гарну погоду, тому обовʼязково беріть купальники, або змінну одежу 👀</p>
+      </div>
     </section>
 
     <div class="divider"></div>
@@ -230,6 +266,17 @@
       <h2>Поділіться спогадами</h2>
       <p>Після свята завантажте, будь ласка, ваші фото та відео цього дня за посиланням 🤍</p>
       <a class="photos-link" href="https://photos.google.com/share/AF1QipNrj4V21Lqj86pywfUur_T1wE430kBaTZXnRGK1-Tjgnq4Ayk7x3UfBtM9PD0_O5A?key=VjhxZFliQkhkRXlIVWItV290QUtXeUwxWExzSTNn" target="_blank" rel="noopener">Відкрити спільний альбом</a>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- See you soon -->
+    <section class="see-you">
+      <div class="see-you-title">До зустрічі</div>
+      <p>Чекаємо на зустріч із вами 23 серпня — нехай цей день стане одним з найкращих спогадів для нас усіх 🤍</p>
+      <div class="see-you-frame">
+        <img src="assets/2Alina&amp;Dynys15.08.25-115.jpg" alt="Денис та Аліна" loading="lazy">
+      </div>
     </section>
 
     <footer>
@@ -326,9 +373,14 @@
     for (var i = 0; i < 18; i++) {
       var left = ((i * 5.9) + (i % 4) * 3.3) % 100;
       var size = 8 + (i % 5) * 2.6;
+      // t: 0 = smallest petal, 1 = biggest. Bigger petals catch more air per
+      // unit weight, so they fall slower and get pushed around by wind more;
+      // smaller ones fall faster and punch through wind with less deflection.
+      var t = (size - 8) / (18.4 - 8);
+      var windFactor = 0.45 + t * 0.85;
       var c = colors[i % colors.length];
       var h = Math.round(size * (1.18 + (i % 3) * 0.16));
-      var dur = (9 + (i % 6) * 2.3).toFixed(1);
+      var dur = (10 + t * 16 + (i % 3) * 1.2).toFixed(1);
       var delay = (-(i * 1.6)).toFixed(1);
       var sway = (3.2 + (i % 3) * 1.5).toFixed(1);
       var radius = shapes[i % shapes.length];
@@ -358,13 +410,15 @@
       wind.appendChild(petal);
       drop.appendChild(wind);
       petalLayer.appendChild(drop);
-      petalNodes.push({ el: wind, ox: 0, oy: 0, vx: 0, vy: 0 });
+      petalNodes.push({ el: wind, ox: 0, oy: 0, vx: 0, vy: 0, windFactor: windFactor });
     }
 
-    var cursor = { x: -999, y: -999, vx: 0, vy: 0, speed: 0 };
+    var cursor = { x: null, y: null, vx: 0, vy: 0, speed: 0 };
+    var MAX_DELTA = 120;
     function onMove(x, y){
-      var dx = x - cursor.x, dy = y - cursor.y;
-      if (Math.abs(dx) > 200 || Math.abs(dy) > 200) { dx = 0; dy = 0; }
+      if (cursor.x === null) { cursor.x = x; cursor.y = y; return; }
+      var dx = Math.max(-MAX_DELTA, Math.min(MAX_DELTA, x - cursor.x));
+      var dy = Math.max(-MAX_DELTA, Math.min(MAX_DELTA, y - cursor.y));
       cursor.vx = dx; cursor.vy = dy;
       cursor.x = x; cursor.y = y;
       cursor.speed = Math.hypot(cursor.vx, cursor.vy);
@@ -386,8 +440,8 @@
           var fall = 1 - dist / R;
           var nx = dx / dist, ny = dy / dist;
           var sp = Math.min(cursor.speed, 70);
-          p.vx += (nx * sp * 0.05 + cursor.vx * 0.05) * fall;
-          p.vy += (ny * sp * 0.03 + cursor.vy * 0.05) * fall;
+          p.vx += (nx * sp * 0.05 + cursor.vx * 0.05) * fall * p.windFactor;
+          p.vy += (ny * sp * 0.03 + cursor.vy * 0.05) * fall * p.windFactor;
         }
         p.vx += -p.ox * 0.020;
         p.vy += -p.oy * 0.020;
