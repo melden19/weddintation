@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="utf-8">
+<title>Денис та Аліна — 23.08.2026</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Запрошення на річницю створення сім'ї Мельників — 23 серпня 2026">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Marck+Script&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#ffffff;
+    --card:#fcfbf7;
+    --accent:#c2587a;
+    --accent-shadow:rgba(194,88,122,0.28);
+    --flora-w:clamp(58px,13vw,230px);
+    --flora-op:0.96;
+    --flora-disp:block;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{background:#ffffff;-webkit-font-smoothing:antialiased}
+  ::selection{background:#f0c9d6}
+  @keyframes petal-fall{from{transform:translateY(-12vh)}to{transform:translateY(112vh)}}
+  @keyframes petal-sway{0%{transform:translateX(0) rotate(0deg)}50%{transform:translateX(34px) rotate(180deg)}100%{transform:translateX(0) rotate(360deg)}}
+  @media (prefers-reduced-motion: reduce){.petal-layer{display:none!important}}
+
+  .page{position:relative;min-height:100vh;background:var(--paper);overflow-x:hidden;font-family:'Cormorant',Georgia,serif;color:#4a473e}
+
+  .flora{position:fixed;top:0;height:100vh;width:var(--flora-w);object-fit:cover;pointer-events:none;z-index:0;display:var(--flora-disp);opacity:var(--flora-op);transition:opacity .4s ease,width .4s ease}
+  .flora-left{left:0;object-position:left top;-webkit-mask-image:linear-gradient(to right,#000 0%,#000 52%,transparent 96%);mask-image:linear-gradient(to right,#000 0%,#000 52%,transparent 96%)}
+  .flora-right{right:0;object-position:right top;-webkit-mask-image:linear-gradient(to left,#000 0%,#000 52%,transparent 96%);mask-image:linear-gradient(to left,#000 0%,#000 52%,transparent 96%)}
+
+  .petal-layer{position:fixed;inset:0;pointer-events:none;z-index:3;overflow:hidden}
+  .petal-drop{position:absolute;top:0}
+  .petal-wind{will-change:transform}
+
+  main{position:relative;z-index:1;max-width:660px;margin:0 auto;padding:0 clamp(20px,8vw,40px)}
+  .divider{width:64px;height:1px;background:#d8d3c4;margin:0 auto}
+
+  section{text-align:center}
+
+  /* HERO */
+  .hero{padding-top:clamp(48px,9vh,90px);padding-bottom:24px}
+  .hero-emoji{font-size:clamp(34px,7vw,44px);margin-bottom:14px}
+  .hero-greeting{font-size:clamp(18px,2.5vw,23px);line-height:1.66;letter-spacing:0.01em;max-width:32ch;margin:0 auto;color:#56524a}
+  .hero-names{margin:clamp(28px,5vh,52px) 0 clamp(20px,4vh,40px)}
+  .name-script{font-family:'Marck Script',cursive;color:#6f7547;font-size:clamp(56px,13vw,104px);line-height:0.92}
+  .name-and{font-family:'Marck Script',cursive;color:#8a8e6e;font-size:clamp(26px,5vw,40px);font-style:italic;margin:2px 0}
+  .hero-divider{display:flex;align-items:center;justify-content:center;gap:16px;margin:8px 0 22px}
+  .hero-divider .line{width:clamp(36px,9vw,80px);height:1px;background:#b9b4a4}
+  .hero-divider .heart{color:var(--accent);font-size:18px}
+  .hero-date{font-size:clamp(40px,9vw,68px);letter-spacing:0.12em;color:#5a5546;font-weight:500}
+
+  /* COUNTDOWN */
+  .countdown{padding:clamp(40px,7vh,72px) 0}
+  .countdown h2{font-size:clamp(22px,3vw,30px);font-weight:500;letter-spacing:0.04em;color:#6f7547;margin-bottom:6px}
+  .countdown .sub{font-style:italic;color:#9a9684;font-size:clamp(15px,2vw,18px);margin-bottom:26px}
+  .countdown .sub s{color:#c2a3b0;text-decoration-thickness:1.5px}
+  .clock{display:flex;justify-content:center;gap:clamp(10px,3vw,26px)}
+  .clock-cell{display:flex;flex-direction:column;gap:4px}
+  .clock-cell .val{font-size:clamp(34px,8vw,58px);color:#5a5546;line-height:1}
+  .clock-cell .unit{font-size:13px;letter-spacing:0.18em;text-transform:uppercase;color:#9a9684}
+  .clock-sep{font-size:clamp(34px,8vw,58px);color:#d8c6a0;line-height:1}
+
+  /* LOCATION */
+  .location{padding:clamp(36px,6vh,64px) 0}
+  .location .label{letter-spacing:0.26em;text-transform:uppercase;font-size:13px;color:var(--accent);margin-bottom:14px}
+  .location .venue{font-family:'Marck Script',cursive;color:#6f7547;font-size:clamp(40px,9vw,62px);line-height:1}
+  .location p{font-size:clamp(17px,2.2vw,21px);color:#56524a;margin-top:8px}
+  .location p.time{margin-top:14px}
+  .map-link{display:inline-block;margin-top:24px;padding:13px 30px;border:1px solid var(--accent);border-radius:999px;color:var(--accent);text-decoration:none;font-size:16px;letter-spacing:0.08em;transition:all .2s}
+  .map-link:hover{background:var(--accent);color:#fff}
+
+  /* TRANSFER */
+  .transfer{padding:clamp(40px,7vh,72px) 0}
+  .transfer .emoji{font-size:32px;margin-bottom:10px}
+  .transfer h2{font-size:clamp(22px,3vw,30px);font-weight:500;color:#6f7547;margin-bottom:6px}
+  .transfer .sub{font-style:italic;color:#9a9684;font-size:clamp(15px,2vw,18px);max-width:34ch;margin:0 auto 28px}
+  .transfer-list{display:flex;flex-direction:column;gap:16px;max-width:440px;margin:0 auto;text-align:left}
+  .transfer-item{display:flex;align-items:baseline;gap:16px;padding:18px 22px;border:1px solid #ece7da;border-radius:14px;background:var(--card)}
+  .transfer-item .time{font-size:clamp(20px,3vw,26px);color:var(--accent);font-weight:600;letter-spacing:0.05em;white-space:nowrap}
+  .transfer-item .desc{font-size:clamp(15px,2vw,18px);color:#56524a;line-height:1.5}
+  .transfer-item .desc strong{color:#6f7547}
+
+  /* DRESS CODE */
+  .dresscode{padding:clamp(40px,7vh,72px) 0}
+  .dresscode .emoji{font-size:32px;margin-bottom:10px}
+  .dresscode h2{font-size:clamp(22px,3vw,30px);font-weight:500;color:#6f7547;margin-bottom:6px}
+  .dresscode p{font-size:clamp(16px,2.1vw,20px);line-height:1.65;max-width:36ch;margin:0 auto 8px;color:#56524a}
+  .dresscode .hint{font-style:italic;color:#9a9684;font-size:15px;margin-bottom:24px}
+  .swatches{display:flex;flex-wrap:wrap;justify-content:center;gap:14px;max-width:420px;margin:0 auto}
+  .swatch{width:54px;height:54px;border-radius:50%;border:2px solid #fff;box-shadow:0 0 0 1px #e3ddcf,0 4px 10px rgba(0,0,0,0.06);cursor:pointer;transition:transform .2s}
+  .swatch:hover{transform:scale(1.08)}
+  .dress-name{margin-top:20px;font-family:'Marck Script',cursive;font-size:clamp(26px,5vw,34px);color:#6f7547;min-height:42px}
+  .dresscode .no-black{margin-top:18px;font-size:clamp(16px,2.1vw,19px);color:#56524a}
+
+  /* GIFTS */
+  .gifts{padding:clamp(40px,7vh,72px) 0}
+  .gifts .emoji{font-size:32px;margin-bottom:10px}
+  .gifts h2{font-size:clamp(22px,3vw,30px);font-weight:500;color:#6f7547;margin-bottom:6px}
+  .gifts p.lead{font-size:clamp(17px,2.2vw,21px);line-height:1.65;max-width:32ch;margin:0 auto 22px;color:#56524a}
+  .gift-hint{font-size:clamp(16px,2.1vw,20px);line-height:1.7;max-width:34ch;margin:0 auto;color:#56524a;background:var(--card);border:1px solid #ece7da;border-radius:14px;padding:20px 24px}
+  .gift-hint strong{color:#6f7547}
+  .gift-toggle{padding:12px 28px;border:1px solid var(--accent);border-radius:999px;background:transparent;color:var(--accent);font-family:'Cormorant',serif;font-size:16px;letter-spacing:0.06em;cursor:pointer;transition:all .2s}
+  .gift-toggle:hover{background:var(--accent);color:#fff}
+
+  /* PHOTOS */
+  .photos{padding:clamp(40px,7vh,72px) 0}
+  .photos .emoji{font-size:32px;margin-bottom:10px}
+  .photos h2{font-size:clamp(22px,3vw,30px);font-weight:500;color:#6f7547;margin-bottom:6px}
+  .photos p{font-size:clamp(16px,2.1vw,20px);line-height:1.65;max-width:34ch;margin:0 auto 24px;color:#56524a}
+  .photos-link{display:inline-block;padding:14px 34px;border-radius:999px;background:var(--accent);color:#fff;text-decoration:none;font-size:16px;letter-spacing:0.07em;box-shadow:0 6px 16px var(--accent-shadow);transition:transform .2s}
+  .photos-link:hover{transform:translateY(-2px)}
+
+  /* FOOTER */
+  footer{text-align:center;padding:clamp(40px,7vh,70px) 0 clamp(50px,9vh,90px)}
+  .footer-divider{display:flex;align-items:center;justify-content:center;gap:14px;margin-bottom:18px}
+  .footer-divider .line{width:50px;height:1px;background:#cfc9b8}
+  .footer-divider .heart{color:var(--accent)}
+  .footer-names{font-family:'Marck Script',cursive;color:#6f7547;font-size:clamp(30px,6vw,44px);line-height:1}
+  .footer-date{color:#9a9684;font-size:16px;letter-spacing:0.14em;margin-top:8px}
+</style>
+</head>
+<body>
+
+<div class="page" id="page">
+
+  <img class="flora flora-left" src="assets/flowers-left.png" alt="" aria-hidden="true">
+  <img class="flora flora-right" src="assets/flowers-right.png" alt="" aria-hidden="true">
+
+  <div class="petal-layer" id="petalLayer" aria-hidden="true"></div>
+
+  <main>
+
+    <!-- Hero -->
+    <section class="hero">
+      <div class="hero-emoji">🥂</div>
+      <p class="hero-greeting">Привіт! Вас було запрошено розділити з нами свято – річницю створення сім'ї Мельників.</p>
+
+      <div class="hero-names">
+        <div class="name-script">Денис</div>
+        <div class="name-and">та</div>
+        <div class="name-script">Аліна</div>
+      </div>
+
+      <div class="hero-divider">
+        <span class="line"></span>
+        <span class="heart">♥</span>
+        <span class="line"></span>
+      </div>
+
+      <div class="hero-date">23 08 2026</div>
+    </section>
+
+    <!-- Countdown -->
+    <section class="countdown">
+      <h2>До свята залишилось</h2>
+      <div class="sub">а потім — танці до <s>ранку</s> комендантської 💃</div>
+      <div class="clock">
+        <div class="clock-cell"><span class="val" id="cd-d">—</span><span class="unit">днів</span></div>
+        <span class="clock-sep">:</span>
+        <div class="clock-cell"><span class="val" id="cd-h">—</span><span class="unit">год</span></div>
+        <span class="clock-sep">:</span>
+        <div class="clock-cell"><span class="val" id="cd-m">—</span><span class="unit">хв</span></div>
+        <span class="clock-sep">:</span>
+        <div class="clock-cell"><span class="val" id="cd-s">—</span><span class="unit">сек</span></div>
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- Location -->
+    <section class="location">
+      <div class="label">Локація</div>
+      <div class="venue">Pine View</div>
+      <p>с. Юзвин</p>
+      <p class="time">Початок о <strong>15:00</strong></p>
+      <a class="map-link" href="https://www.google.com/maps/search/?api=1&query=Pine+View+%D0%AE%D0%B7%D0%B2%D0%B8%D0%BD" target="_blank" rel="noopener">Відкрити на карті</a>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- Transfer -->
+    <section class="transfer">
+      <div class="emoji">🚌</div>
+      <h2>Буде організовано трансфер</h2>
+      <p class="sub">Заохочуємо не приїжджати на своєму транспорті та скористатися трансфером, щоб відірватися по-повній разом з нареченими!</p>
+      <div class="transfer-list">
+        <div class="transfer-item">
+          <span class="time">14:00</span>
+          <span class="desc"><strong>Туди</strong> — з парковки колишнього «Фуршету» біля Західного автовокзалу</span>
+        </div>
+        <div class="transfer-item">
+          <span class="time">22:00</span>
+          <span class="desc"><strong>Назад</strong> — до парковки колишнього «Фуршету» біля Західного автовокзалу</span>
+        </div>
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- Dress code -->
+    <section class="dresscode">
+      <div class="emoji">👗</div>
+      <h2>Дрес-код</h2>
+      <p>Будемо дуже раді, якщо у своїх образах ви підтримаєте атмосферу свята та оберете пастельні відтінки.</p>
+      <p class="hint">наведіть або торкніться кольору, щоб побачити назву</p>
+      <div class="swatches" id="swatches"></div>
+      <div class="dress-name" id="dressName"></div>
+      <p class="no-black">Просимо утриматися від чорного кольору в образах 🤍</p>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- Gifts -->
+    <section class="gifts">
+      <div class="emoji">🎁</div>
+      <h2>Подарунки</h2>
+      <p class="lead">На ваш розсуд — головне, що ви будете поруч.</p>
+      <div id="giftHintBox"></div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- Photos -->
+    <section class="photos">
+      <div class="emoji">📸</div>
+      <h2>Поділіться спогадами</h2>
+      <p>Після свята завантажте, будь ласка, ваші фото та відео цього дня за посиланням 🤍</p>
+      <a class="photos-link" href="https://photos.google.com/share/AF1QipNrj4V21Lqj86pywfUur_T1wE430kBaTZXnRGK1-Tjgnq4Ayk7x3UfBtM9PD0_O5A?key=VjhxZFliQkhkRXlIVWItV290QUtXeUwxWExzSTNn" target="_blank" rel="noopener">Відкрити спільний альбом</a>
+    </section>
+
+    <footer>
+      <div class="footer-divider">
+        <span class="line"></span>
+        <span class="heart">♥</span>
+        <span class="line"></span>
+      </div>
+      <div class="footer-names">Денис та Аліна</div>
+      <div class="footer-date">23 · 08 · 2026</div>
+    </footer>
+
+  </main>
+</div>
+
+<script>
+(function(){
+  'use strict';
+
+  // ---------- Countdown ----------
+  var target = new Date('2026-08-23T15:00:00+03:00').getTime();
+  function pad(n){ return String(n).padStart(2, '0'); }
+  function tick(){
+    var diff = Math.floor((target - Date.now()) / 1000);
+    if (diff < 0) diff = 0;
+    var d = Math.floor(diff / 86400);
+    var h = Math.floor((diff % 86400) / 3600);
+    var m = Math.floor((diff % 3600) / 60);
+    var s = diff % 60;
+    document.getElementById('cd-d').textContent = String(d);
+    document.getElementById('cd-h').textContent = pad(h);
+    document.getElementById('cd-m').textContent = pad(m);
+    document.getElementById('cd-s').textContent = pad(s);
+  }
+  tick();
+  setInterval(tick, 1000);
+
+  // ---------- Dress code swatches ----------
+  var palette = [
+    { name: 'молочний', color: '#f4ecdc' },
+    { name: 'жовтий', color: '#f1e0a3' },
+    { name: 'пудровий', color: '#ecc6c6' },
+    { name: 'блакитний', color: '#bcd4e8' },
+    { name: 'ніжно-зелений', color: '#cde0c2' },
+    { name: 'лавандовий', color: '#d6c9e8' },
+  ];
+  var swatchesEl = document.getElementById('swatches');
+  var dressNameEl = document.getElementById('dressName');
+  palette.forEach(function(p){
+    var btn = document.createElement('button');
+    btn.className = 'swatch';
+    btn.title = p.name;
+    btn.style.background = p.color;
+    var show = function(){ dressNameEl.textContent = p.name; };
+    btn.addEventListener('click', show);
+    btn.addEventListener('mouseenter', show);
+    swatchesEl.appendChild(btn);
+  });
+
+  // ---------- Gift hint toggle ----------
+  var giftHintBox = document.getElementById('giftHintBox');
+  function renderGiftClosed(){
+    giftHintBox.innerHTML = '';
+    var btn = document.createElement('button');
+    btn.className = 'gift-toggle';
+    btn.textContent = 'Хочу маленьку підказку 🤫';
+    btn.addEventListener('click', renderGiftOpen);
+    giftHintBox.appendChild(btn);
+  }
+  function renderGiftOpen(){
+    giftHintBox.innerHTML = '';
+    var p = document.createElement('p');
+    p.className = 'gift-hint';
+    p.innerHTML = 'Але якщо хотіли подарувати пляшку алкоголю — краще подивіться в сторону <strong>собачого корму</strong>. Це у нашій сім\'ї більш ходовий товар 😉';
+    giftHintBox.appendChild(p);
+  }
+  renderGiftClosed();
+
+  // ---------- Falling petals ----------
+  var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var petalLayer = document.getElementById('petalLayer');
+
+  if (!reduceMotion) {
+    var colors = ['#eec3c8', '#f0dca0', '#bcd4e8', '#d6c9e8', '#f1e6d4', '#e8a9bd', '#cfe0c2'];
+    var shapes = [
+      '100% 0% 100% 0% / 100% 0% 100% 0%',
+      '50% 50% 50% 50% / 70% 70% 30% 30%',
+      '90% 10% 90% 10% / 60% 40% 60% 40%',
+      '60% 40% 55% 45% / 75% 70% 30% 25%',
+      '100% 0% 55% 45% / 85% 60% 40% 15%',
+    ];
+
+    var petalNodes = [];
+    for (var i = 0; i < 18; i++) {
+      var left = ((i * 5.9) + (i % 4) * 3.3) % 100;
+      var size = 8 + (i % 5) * 2.6;
+      var c = colors[i % colors.length];
+      var h = Math.round(size * (1.18 + (i % 3) * 0.16));
+      var dur = (9 + (i % 6) * 2.3).toFixed(1);
+      var delay = (-(i * 1.6)).toFixed(1);
+      var sway = (3.2 + (i % 3) * 1.5).toFixed(1);
+      var radius = shapes[i % shapes.length];
+      var rot = ((i * 47) % 90 - 45);
+      var opacity = (0.5 + (i % 4) * 0.08).toFixed(2);
+      var bg = 'linear-gradient(135deg, ' + c + ' 0%, ' + c + ' 55%, rgba(255,255,255,0.55) 130%)';
+
+      var drop = document.createElement('div');
+      drop.className = 'petal-drop';
+      drop.style.left = left.toFixed(1) + '%';
+      drop.style.animation = 'petal-fall ' + dur + 's linear infinite';
+      drop.style.animationDelay = delay + 's';
+
+      var wind = document.createElement('div');
+      wind.className = 'petal-wind';
+
+      var petal = document.createElement('div');
+      petal.style.width = size.toFixed(1) + 'px';
+      petal.style.height = h + 'px';
+      petal.style.background = bg;
+      petal.style.borderRadius = radius;
+      petal.style.transform = 'rotate(' + rot + 'deg)';
+      petal.style.opacity = opacity;
+      petal.style.boxShadow = 'inset 0 -3px 4px rgba(120,80,90,0.10), inset 2px 2px 4px rgba(255,255,255,0.45)';
+      petal.style.animation = 'petal-sway ' + sway + 's ease-in-out infinite';
+
+      wind.appendChild(petal);
+      drop.appendChild(wind);
+      petalLayer.appendChild(drop);
+      petalNodes.push({ el: wind, ox: 0, oy: 0, vx: 0, vy: 0 });
+    }
+
+    var cursor = { x: -999, y: -999, vx: 0, vy: 0, speed: 0 };
+    function onMove(x, y){
+      var dx = x - cursor.x, dy = y - cursor.y;
+      if (Math.abs(dx) > 200 || Math.abs(dy) > 200) { dx = 0; dy = 0; }
+      cursor.vx = dx; cursor.vy = dy;
+      cursor.x = x; cursor.y = y;
+      cursor.speed = Math.hypot(cursor.vx, cursor.vy);
+    }
+    window.addEventListener('mousemove', function(e){ onMove(e.clientX, e.clientY); }, { passive: true });
+    window.addEventListener('touchmove', function(e){
+      if (e.touches && e.touches[0]) onMove(e.touches[0].clientX, e.touches[0].clientY);
+    }, { passive: true });
+
+    var R = 150;
+    function loop(){
+      var rects = petalNodes.map(function(p){ return p.el.getBoundingClientRect(); });
+      for (var n = 0; n < petalNodes.length; n++) {
+        var p = petalNodes[n], r = rects[n];
+        var cx = r.left + r.width / 2, cy = r.top + r.height / 2;
+        var dx = cx - cursor.x, dy = cy - cursor.y;
+        var dist = Math.hypot(dx, dy) || 1;
+        if (dist < R && cursor.speed > 0.6) {
+          var fall = 1 - dist / R;
+          var nx = dx / dist, ny = dy / dist;
+          var sp = Math.min(cursor.speed, 70);
+          p.vx += (nx * sp * 0.05 + cursor.vx * 0.05) * fall;
+          p.vy += (ny * sp * 0.03 + cursor.vy * 0.05) * fall;
+        }
+        p.vx += -p.ox * 0.020;
+        p.vy += -p.oy * 0.020;
+        p.vx *= 0.90; p.vy *= 0.90;
+        p.ox += p.vx; p.oy += p.vy;
+        p.el.style.transform = 'translate(' + p.ox.toFixed(1) + 'px,' + p.oy.toFixed(1) + 'px)';
+      }
+      cursor.speed *= 0.86; cursor.vx *= 0.86; cursor.vy *= 0.86;
+      requestAnimationFrame(loop);
+    }
+    requestAnimationFrame(loop);
+  }
+})();
+</script>
+</body>
+</html>
