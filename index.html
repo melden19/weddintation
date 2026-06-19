@@ -18,6 +18,7 @@
     --flora-op:0.96;
     --flora-disp:block;
     --side-pad:clamp(20px,8vw,40px);
+    --card-w:clamp(260px,72vw,440px);
   }
   *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
   html{scroll-behavior:smooth}
@@ -79,7 +80,7 @@
   .transfer .emoji{font-size:32px;margin-bottom:10px}
   .transfer h2{font-size:clamp(22px,3vw,30px);font-weight:500;color:#6f7547;margin-bottom:6px}
   .transfer .sub{font-style:italic;color:#9a9684;font-size:clamp(15px,2vw,18px);max-width:34ch;margin:0 auto 28px}
-  .transfer-list{display:flex;flex-direction:column;gap:16px;max-width:440px;margin:0 auto;text-align:left}
+  .transfer-list{display:flex;flex-direction:column;gap:16px;max-width:var(--card-w);margin:0 auto;text-align:left}
   @media (max-width:560px){
     .transfer-list{padding:0 max(0px,calc(var(--flora-w) - var(--side-pad) + 6px))}
   }
@@ -95,20 +96,23 @@
   .dresscode p{font-size:clamp(16px,2.1vw,20px);line-height:1.65;max-width:36ch;margin:0 auto 8px;color:#56524a}
   .dresscode .hint{font-style:italic;color:#9a9684;font-size:15px;margin-bottom:24px}
   .swatches{display:grid;grid-template-columns:repeat(3,clamp(46px,15vw,54px));justify-content:center;gap:clamp(14px,4vw,20px);margin:0 auto}
+  @media (min-width:600px){
+    .swatches{grid-template-columns:repeat(6,54px)}
+  }
   .swatch{width:100%;aspect-ratio:1;border-radius:50%;border:2px solid #fff;box-shadow:0 0 0 1px #e3ddcf,0 4px 10px rgba(0,0,0,0.06);cursor:pointer;transition:transform .2s}
   .swatch:hover{transform:scale(1.08)}
   .dress-name{margin-top:20px;font-family:'Marck Script',cursive;font-size:clamp(26px,5vw,34px);color:#6f7547;min-height:42px}
   .dresscode .no-black{margin-top:18px;font-size:clamp(16px,2.1vw,19px);color:#56524a}
-  .dresscode .pool-note{margin:22px auto 0;max-width:520px;color:#2c5f6f;background:linear-gradient(160deg,#eef8fb 0%,#dcf0f5 100%);border:1px solid #bfe3ee;border-radius:18px;padding:22px 28px;box-shadow:0 8px 20px rgba(86,160,181,0.16)}
-  .dresscode .pool-note-icon{font-size:30px;margin-bottom:8px}
-  .dresscode .pool-note p{font-size:clamp(16px,2.1vw,19px);line-height:1.6;color:#2c5f6f;max-width:none;margin:0}
+  .dresscode .pool-note{margin:22px auto 0;max-width:var(--card-w);color:#2c5f6f;background:linear-gradient(160deg,#eef8fb 0%,#dcf0f5 100%);border:1px solid #bfe3ee;border-radius:14px;padding:18px 22px}
+  .dresscode .pool-note-icon{font-size:26px;margin-bottom:8px}
+  .dresscode .pool-note p{font-size:clamp(15px,2vw,18px);line-height:1.55;color:#2c5f6f;max-width:none;margin:0}
 
   /* GIFTS */
   .gifts{padding:clamp(40px,7vh,72px) 0}
   .gifts .emoji{font-size:32px;margin-bottom:10px}
   .gifts h2{font-size:clamp(22px,3vw,30px);font-weight:500;color:#6f7547;margin-bottom:6px}
-  .gifts p.lead{font-size:clamp(17px,2.2vw,21px);line-height:1.65;max-width:32ch;margin:0 auto 22px;color:#56524a}
-  .gift-hint{font-size:clamp(16px,2.1vw,20px);line-height:1.7;max-width:34ch;margin:0 auto;color:#56524a;background:var(--card);border:1px solid #ece7da;border-radius:14px;padding:20px 24px}
+  .gifts p.lead{font-size:clamp(17px,2.2vw,21px);line-height:1.65;max-width:34ch;margin:0 auto 22px;color:#56524a}
+  .gift-hint{font-size:clamp(16px,2.1vw,20px);line-height:1.7;max-width:var(--card-w);margin:0 auto;color:#56524a;background:var(--card);border:1px solid #ece7da;border-radius:14px;padding:20px 24px;text-wrap:pretty}
   .gift-hint strong{color:#6f7547}
   .gift-toggle{padding:12px 28px;border:1px solid var(--accent);border-radius:999px;background:transparent;color:var(--accent);font-family:'Cormorant',serif;font-size:16px;letter-spacing:0.06em;cursor:pointer;transition:all .2s}
   .gift-toggle:hover{background:var(--accent);color:#fff}
@@ -258,7 +262,7 @@
     <section class="gifts">
       <div class="emoji">🎁</div>
       <h2>Подарунки</h2>
-      <p class="lead">На ваш розсуд — головне, що ви будете поруч.</p>
+      <p class="lead">На ваш розсуд — ви нас добре знаєте, тож точно оберете щось влучне 🤍</p>
       <div id="giftHintBox"></div>
     </section>
 
@@ -354,7 +358,7 @@
     giftHintBox.innerHTML = '';
     var p = document.createElement('p');
     p.className = 'gift-hint';
-    p.innerHTML = 'Але якщо хотіли подарувати пляшку алкоголю — краще подивіться в сторону <strong>собачого корму</strong>. Це у нашій сім\'ї більш ходовий товар 😉';
+    p.innerHTML = 'Якщо раптом нічого не приходить в голову, грошові внески до нашого <strong>«ремонтного фонду 🏠»</strong> вітаються. <br /> Але, оскільки ми сімʼя айтівців, не виключено, що він буде перейменований у <strong>«фонд судного дня 🤖»</strong>, коли ШІ зможе створювати такі запрошення без допомоги <strong>👾 шкіряних мішків 👾</strong>.';
     giftHintBox.appendChild(p);
   }
   renderGiftClosed();
