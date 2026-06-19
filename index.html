@@ -21,12 +21,21 @@
     --card-w:clamp(260px,72vw,440px);
   }
   *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
-  html{scroll-behavior:smooth}
   body{background:#ffffff;-webkit-font-smoothing:antialiased}
   ::selection{background:#f0c9d6}
   @keyframes petal-fall{from{transform:translateY(-12vh)}to{transform:translateY(112vh)}}
   @keyframes petal-sway{0%{transform:translateX(0) rotate(0deg)}50%{transform:translateX(34px) rotate(180deg)}100%{transform:translateX(0) rotate(360deg)}}
   @media (prefers-reduced-motion: reduce){.petal-layer{display:none!important}}
+
+  /* TACTILE CARDS */
+  .tilt-card{--rx:0deg;--ry:0deg;--scale:1;--mx:50%;--my:50%;position:relative;transform:perspective(600px) rotateX(var(--rx)) rotateY(var(--ry)) scale(var(--scale));transition:opacity .6s cubic-bezier(.22,.61,.36,1),transform .35s ease,box-shadow .25s ease;will-change:transform}
+  .tilt-card:hover{box-shadow:0 14px 30px rgba(74,71,58,0.12)}
+  .tilt-card.is-pressed{--scale:0.97;transition-duration:.08s}
+  @media (prefers-reduced-motion: reduce){.tilt-card{transition:box-shadow .01s}}
+  .tilt-card.glow::after{content:'';position:absolute;inset:0;border-radius:inherit;background:radial-gradient(160px circle at var(--mx) var(--my),rgba(255,255,255,0.55),transparent 65%);opacity:0;transition:opacity .25s ease;pointer-events:none}
+  .tilt-card.glow:hover::after{opacity:1}
+  @media (hover:none){.tilt-card.glow::after{display:none}}
+  @media (prefers-reduced-motion: reduce){.tilt-card.glow::after{display:none}}
 
   .page{position:relative;min-height:100vh;background:var(--paper);overflow-x:hidden;font-family:'Cormorant',Georgia,serif;color:#4a473e}
 
@@ -48,8 +57,13 @@
   .hero-emoji{font-size:clamp(34px,7vw,44px);margin-bottom:14px}
   .hero-greeting{font-size:clamp(18px,2.5vw,23px);line-height:1.66;letter-spacing:0.01em;max-width:32ch;margin:0 auto;color:#56524a}
   .hero-names{margin:clamp(28px,5vh,52px) 0 clamp(20px,4vh,40px)}
-  .name-script{font-family:'Marck Script',cursive;color:#6f7547;font-size:clamp(56px,13vw,104px);line-height:0.92}
-  .name-and{font-family:'Marck Script',cursive;color:#8a8e6e;font-size:clamp(26px,5vw,40px);font-style:italic;margin:2px 0}
+  .name-script{font-family:'Marck Script',cursive;color:#6f7547;font-size:clamp(56px,13vw,104px);line-height:0.92;clip-path:inset(0 100% 0 0)}
+  .name-and{font-family:'Marck Script',cursive;color:#8a8e6e;font-size:clamp(26px,5vw,40px);font-style:italic;margin:2px 0;clip-path:inset(0 100% 0 0)}
+  html.loaded .hero-names .name-script:nth-of-type(1){animation:write-reveal .9s cubic-bezier(.65,0,.35,1) .25s forwards}
+  html.loaded .hero-names .name-and{animation:write-reveal .7s cubic-bezier(.65,0,.35,1) 1.05s forwards}
+  html.loaded .hero-names .name-script:nth-of-type(3){animation:write-reveal .9s cubic-bezier(.65,0,.35,1) 1.35s forwards}
+  @keyframes write-reveal{to{clip-path:inset(0 0% 0 0)}}
+  @media (prefers-reduced-motion: reduce){.name-script,.name-and{clip-path:none}}
   .hero-divider{display:flex;align-items:center;justify-content:center;gap:16px;margin:8px 0 22px}
   .hero-divider .line{width:clamp(36px,9vw,80px);height:1px;background:#b9b4a4}
   .hero-divider .heart{color:var(--accent);font-size:18px}
@@ -95,7 +109,7 @@
   .dresscode h2{font-size:clamp(22px,3vw,30px);font-weight:500;color:#6f7547;margin-bottom:6px}
   .dresscode p{font-size:clamp(16px,2.1vw,20px);line-height:1.65;max-width:36ch;margin:0 auto 8px;color:#56524a}
   .dresscode .hint{font-style:italic;color:#9a9684;font-size:15px;margin-bottom:24px}
-  .swatches{display:grid;grid-template-columns:repeat(3,clamp(46px,15vw,54px));justify-content:center;gap:clamp(14px,4vw,20px);margin:0 auto}
+  .swatches{display:grid;grid-template-columns:repeat(3,clamp(46px,15vw,54px));justify-content:center;gap:clamp(14px,4vw,20px);margin:20px auto}
   @media (min-width:600px){
     .swatches{grid-template-columns:repeat(6,54px)}
   }
@@ -153,6 +167,7 @@
     if (!loader || loader.dataset.hidden) return;
     loader.dataset.hidden = '1';
     loader.style.opacity = '0';
+    document.documentElement.classList.add('loaded');
     setTimeout(function(){ loader.remove(); }, 320);
   }
   var fontsReady = (document.fonts && document.fonts.ready) ? document.fonts.ready : Promise.resolve();
@@ -228,11 +243,11 @@
       <h2>Буде організовано трансфер</h2>
       <p class="sub">Заохочуємо не приїжджати на своєму транспорті та скористатися трансфером, щоб відірватися по-повній разом з нареченими!</p>
       <div class="transfer-list">
-        <div class="transfer-item">
+        <div class="transfer-item tilt-card">
           <span class="time">14:00</span>
           <span class="desc"><strong>Туди</strong> — з парковки колишнього «Фуршету» біля Західного автовокзалу</span>
         </div>
-        <div class="transfer-item">
+        <div class="transfer-item tilt-card">
           <span class="time">22:00</span>
           <span class="desc"><strong>Назад</strong> — до парковки колишнього «Фуршету» біля Західного автовокзалу</span>
         </div>
@@ -246,11 +261,10 @@
       <div class="emoji">👗</div>
       <h2>Дрес-код</h2>
       <p>Будемо дуже раді, якщо у своїх образах ви підтримаєте атмосферу свята та оберете пастельні відтінки.</p>
-      <p class="hint">наведіть або торкніться кольору, щоб побачити назву</p>
       <div class="swatches" id="swatches"></div>
       <div class="dress-name" id="dressName"></div>
       <p class="no-black">Просимо утриматися від чорного кольору в образах 🤍</p>
-      <div class="pool-note">
+      <div class="pool-note tilt-card">
         <div class="pool-note-icon">🌊</div>
         <p>На території є басейн й ми сподіваємося на гарну погоду, тому обовʼязково беріть купальники, або змінну одежу 👀</p>
       </div>
@@ -282,7 +296,7 @@
     <section class="see-you">
       <div class="see-you-title">До зустрічі</div>
       <p>Чекаємо на зустріч із вами 23 серпня — нехай цей день стане одним з найкращих спогадів для нас усіх 🤍</p>
-      <div class="see-you-frame">
+      <div class="see-you-frame tilt-card glow">
         <img src="assets/2Alina&amp;Dynys15.08.25-115.jpg" alt="Денис та Аліна" loading="lazy">
       </div>
     </section>
@@ -357,11 +371,46 @@
   function renderGiftOpen(){
     giftHintBox.innerHTML = '';
     var p = document.createElement('p');
-    p.className = 'gift-hint';
+    p.className = 'gift-hint tilt-card';
     p.innerHTML = 'Якщо раптом нічого не приходить в голову, грошові внески до нашого <strong>«ремонтного фонду 🏠»</strong> вітаються. <br /> Але, оскільки ми сімʼя айтівців, не виключено, що він буде перейменований у <strong>«фонд судного дня 🤖»</strong>, коли ШІ зможе створювати такі запрошення без допомоги <strong>👾 шкіряних мішків 👾</strong>.';
     giftHintBox.appendChild(p);
   }
   renderGiftClosed();
+
+  // ---------- Tactile card interactions ----------
+  var hoverCapable = window.matchMedia && window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+  function resetTilt(card){
+    card.style.removeProperty('--rx');
+    card.style.removeProperty('--ry');
+  }
+  if (hoverCapable) {
+    document.addEventListener('mousemove', function(e){
+      var card = e.target.closest && e.target.closest('.tilt-card');
+      if (!card) return;
+      var r = card.getBoundingClientRect();
+      var px = (e.clientX - r.left) / r.width;
+      var py = (e.clientY - r.top) / r.height;
+      var max = 6;
+      card.style.setProperty('--ry', ((px - 0.5) * max * 2).toFixed(2) + 'deg');
+      card.style.setProperty('--rx', ((0.5 - py) * max * 2).toFixed(2) + 'deg');
+      card.style.setProperty('--mx', (px * 100).toFixed(1) + '%');
+      card.style.setProperty('--my', (py * 100).toFixed(1) + '%');
+    });
+    document.addEventListener('mouseout', function(e){
+      var card = e.target.closest && e.target.closest('.tilt-card');
+      if (card && !card.contains(e.relatedTarget)) resetTilt(card);
+    });
+  }
+  document.addEventListener('touchstart', function(e){
+    var card = e.target.closest && e.target.closest('.tilt-card');
+    if (card) card.classList.add('is-pressed');
+  }, { passive: true });
+  ['touchend', 'touchcancel'].forEach(function(type){
+    document.addEventListener(type, function(e){
+      var card = e.target.closest && e.target.closest('.tilt-card');
+      if (card) card.classList.remove('is-pressed');
+    }, { passive: true });
+  });
 
   // ---------- Falling petals ----------
   var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -378,7 +427,7 @@
     ];
 
     var petalNodes = [];
-    for (var i = 0; i < 18; i++) {
+    for (var i = 0; i < 30; i++) {
       var left = ((i * 5.9) + (i % 4) * 3.3) % 100;
       var size = 8 + (i % 5) * 2.6;
       // t: 0 = smallest petal, 1 = biggest. Bigger petals catch more air per
@@ -436,20 +485,46 @@
       if (e.touches && e.touches[0]) onMove(e.touches[0].clientX, e.touches[0].clientY);
     }, { passive: true });
 
-    var R = 150;
+    var R = 210;
+    // `scroll` events get coalesced/throttled by the browser under sustained fast
+    // input (a continuous fast wheel-scroll burst can produce long gaps with zero
+    // `scroll` events mid-burst), so a "pause for 150ms after the last scroll
+    // event" timer can expire and resume expensive getBoundingClientRect() reads
+    // while the page is still actively scrolling. Track actual scroll position
+    // frame-to-frame instead — that's immune to event coalescing — and keep the
+    // event listener only as a fast-path / extra grace margin.
+    var isScrolling = false;
+    var scrollEndTimer = null;
+    var lastScrollY = window.scrollY;
+    window.addEventListener('scroll', function(){
+      isScrolling = true;
+      clearTimeout(scrollEndTimer);
+      scrollEndTimer = setTimeout(function(){ isScrolling = false; }, 150);
+    }, { passive: true });
+
     function loop(){
-      var rects = petalNodes.map(function(p){ return p.el.getBoundingClientRect(); });
+      var curScrollY = window.scrollY;
+      if (curScrollY !== lastScrollY) {
+        isScrolling = true;
+        clearTimeout(scrollEndTimer);
+        scrollEndTimer = setTimeout(function(){ isScrolling = false; }, 150);
+      }
+      lastScrollY = curScrollY;
+      var rects = isScrolling ? null : petalNodes.map(function(p){ return p.el.getBoundingClientRect(); });
       for (var n = 0; n < petalNodes.length; n++) {
-        var p = petalNodes[n], r = rects[n];
-        var cx = r.left + r.width / 2, cy = r.top + r.height / 2;
-        var dx = cx - cursor.x, dy = cy - cursor.y;
-        var dist = Math.hypot(dx, dy) || 1;
-        if (dist < R && cursor.speed > 0.6) {
-          var fall = 1 - dist / R;
-          var nx = dx / dist, ny = dy / dist;
-          var sp = Math.min(cursor.speed, 70);
-          p.vx += (nx * sp * 0.05 + cursor.vx * 0.05) * fall * p.windFactor;
-          p.vy += (ny * sp * 0.03 + cursor.vy * 0.05) * fall * p.windFactor;
+        var p = petalNodes[n];
+        if (rects) {
+          var r = rects[n];
+          var cx = r.left + r.width / 2, cy = r.top + r.height / 2;
+          var dx = cx - cursor.x, dy = cy - cursor.y;
+          var dist = Math.hypot(dx, dy) || 1;
+          if (dist < R && cursor.speed > 0.6) {
+            var fall = 1 - dist / R;
+            var nx = dx / dist, ny = dy / dist;
+            var sp = Math.min(cursor.speed, 70);
+            p.vx += (nx * sp * 0.05 + cursor.vx * 0.05) * fall * p.windFactor;
+            p.vy += (ny * sp * 0.03 + cursor.vy * 0.05) * fall * p.windFactor;
+          }
         }
         p.vx += -p.ox * 0.020;
         p.vy += -p.oy * 0.020;
