@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <title>Денис та Аліна — 23.08.2026</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="description" content="Запрошення на річницю створення сім'ї Мельників — 23 серпня 2026">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -17,8 +17,9 @@
     --flora-w:clamp(58px,13vw,230px);
     --flora-op:0.96;
     --flora-disp:block;
+    --side-pad:clamp(20px,8vw,40px);
   }
-  *{box-sizing:border-box;margin:0;padding:0}
+  *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
   html{scroll-behavior:smooth}
   body{background:#ffffff;-webkit-font-smoothing:antialiased}
   ::selection{background:#f0c9d6}
@@ -36,7 +37,7 @@
   .petal-drop{position:absolute;top:0}
   .petal-wind{will-change:transform}
 
-  main{position:relative;z-index:1;max-width:660px;margin:0 auto;padding:0 clamp(20px,8vw,40px)}
+  main{position:relative;z-index:1;max-width:660px;margin:0 auto;padding:0 var(--side-pad)}
   .divider{width:64px;height:1px;background:#d8d3c4;margin:0 auto}
 
   section{text-align:center}
@@ -79,7 +80,10 @@
   .transfer h2{font-size:clamp(22px,3vw,30px);font-weight:500;color:#6f7547;margin-bottom:6px}
   .transfer .sub{font-style:italic;color:#9a9684;font-size:clamp(15px,2vw,18px);max-width:34ch;margin:0 auto 28px}
   .transfer-list{display:flex;flex-direction:column;gap:16px;max-width:440px;margin:0 auto;text-align:left}
-  .transfer-item{display:flex;align-items:baseline;gap:16px;padding:18px 22px;border:1px solid #ece7da;border-radius:14px;background:var(--card)}
+  @media (max-width:560px){
+    .transfer-list{padding:0 max(0px,calc(var(--flora-w) - var(--side-pad) + 6px))}
+  }
+  .transfer-item{display:flex;flex-direction:column;align-items:flex-start;gap:6px;padding:18px 22px;border:1px solid #ece7da;border-radius:14px;background:var(--card)}
   .transfer-item .time{font-size:clamp(20px,3vw,26px);color:var(--accent);font-weight:600;letter-spacing:0.05em;white-space:nowrap}
   .transfer-item .desc{font-size:clamp(15px,2vw,18px);color:#56524a;line-height:1.5}
   .transfer-item .desc strong{color:#6f7547}
@@ -90,8 +94,8 @@
   .dresscode h2{font-size:clamp(22px,3vw,30px);font-weight:500;color:#6f7547;margin-bottom:6px}
   .dresscode p{font-size:clamp(16px,2.1vw,20px);line-height:1.65;max-width:36ch;margin:0 auto 8px;color:#56524a}
   .dresscode .hint{font-style:italic;color:#9a9684;font-size:15px;margin-bottom:24px}
-  .swatches{display:flex;flex-wrap:wrap;justify-content:center;gap:14px;max-width:420px;margin:0 auto}
-  .swatch{width:54px;height:54px;border-radius:50%;border:2px solid #fff;box-shadow:0 0 0 1px #e3ddcf,0 4px 10px rgba(0,0,0,0.06);cursor:pointer;transition:transform .2s}
+  .swatches{display:grid;grid-template-columns:repeat(3,clamp(46px,15vw,54px));justify-content:center;gap:clamp(14px,4vw,20px);margin:0 auto}
+  .swatch{width:100%;aspect-ratio:1;border-radius:50%;border:2px solid #fff;box-shadow:0 0 0 1px #e3ddcf,0 4px 10px rgba(0,0,0,0.06);cursor:pointer;transition:transform .2s}
   .swatch:hover{transform:scale(1.08)}
   .dress-name{margin-top:20px;font-family:'Marck Script',cursive;font-size:clamp(26px,5vw,34px);color:#6f7547;min-height:42px}
   .dresscode .no-black{margin-top:18px;font-size:clamp(16px,2.1vw,19px);color:#56524a}
@@ -125,7 +129,7 @@
   .see-you p{font-size:clamp(16px,2.1vw,20px);line-height:1.65;font-style:italic;max-width:480px;text-align:center;margin:0 auto;color:#56524a}
 
   /* FOOTER */
-  footer{text-align:center;padding:clamp(16px,3vh,28px) 0 clamp(50px,9vh,90px)}
+  footer{text-align:center;padding:clamp(16px,3vh,28px) 0 max(clamp(50px,9vh,90px),calc(env(safe-area-inset-bottom) + 24px))}
   .footer-divider{display:flex;align-items:center;justify-content:center;gap:14px;margin-bottom:18px}
   .footer-divider .line{width:50px;height:1px;background:#cfc9b8}
   .footer-divider .heart{color:var(--accent)}
@@ -159,8 +163,8 @@
 
 <div class="page" id="page">
 
-  <img class="flora flora-left" src="assets/flowers-left.png" alt="" aria-hidden="true">
-  <img class="flora flora-right" src="assets/flowers-right.png" alt="" aria-hidden="true">
+  <img class="flora flora-left" src="assets/flowers-left.webp" alt="" aria-hidden="true">
+  <img class="flora flora-right" src="assets/flowers-right.webp" alt="" aria-hidden="true">
 
   <div class="petal-layer" id="petalLayer" aria-hidden="true"></div>
 
